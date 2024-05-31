@@ -33,4 +33,12 @@ export default {
   LINE_HEIGHT: {
     BASE: '130%',
   },
+  SPACES: {
+    0: '2px',
+    1: '4px',
+    2: '8px',
+    3: '16px',
+    4: '24px',
+    5: '32px',
+  },
 }
