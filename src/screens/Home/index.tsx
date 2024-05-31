@@ -4,14 +4,13 @@ import { Header } from '@components/Header'
 import { Card } from '@components/Card'
 import { Text } from '@components/Text'
 import { Button } from '@components/Button'
-import { PageContainer } from '@components/PageContainer'
+import { Page } from '@components/Page'
 import { CardMeal } from '@components/CardMeal'
 
 import {
   AddMealContainer,
   CardContainer,
   HomeCardArrowIcon,
-  HomeContainer,
   MealsList,
   MealsListTitle,
 } from './styles'
@@ -48,21 +47,21 @@ const meals = [
 
 export function Home() {
   return (
-    <HomeContainer>
-      <Header />
+    <Page.Container>
+      <Page.Content>
+        <Header />
 
-      <CardContainer>
-        <Card.Root variant="positive">
-          <HomeCardArrowIcon variant="positive" />
-          <Card.Title size="LG">90,86%</Card.Title>
-          <Card.Description>das refeições dentro da dieta</Card.Description>
-        </Card.Root>
-      </CardContainer>
+        <CardContainer>
+          <Card.Root variant="positive">
+            <HomeCardArrowIcon variant="positive" />
+            <Card.Title size="LG">90,86%</Card.Title>
+            <Card.Description>das refeições dentro da dieta</Card.Description>
+          </Card.Root>
+        </CardContainer>
 
-      <PageContainer>
         <AddMealContainer>
           <Text>Refeições</Text>
-          <Button title="Nova refeição" icon={Plus} onPress={() => null} />
+          <Button title="Nova refeição" icon={Plus} />
         </AddMealContainer>
 
         <MealsList
@@ -74,7 +73,7 @@ export function Home() {
             <MealsListTitle size="LG">{section.title}</MealsListTitle>
           )}
         />
-      </PageContainer>
-    </HomeContainer>
+      </Page.Content>
+    </Page.Container>
   )
 }

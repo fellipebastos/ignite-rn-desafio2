@@ -1,17 +1,11 @@
 import styled, { DefaultTheme, css } from 'styled-components/native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { ArrowUpRight } from 'phosphor-react-native'
 
-import { Container } from '@components/Container'
 import { Title } from '@components/Title'
 
-export const HomeContainer = styled(SafeAreaView)`
-  flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.GRAY_100};
-`
-
-export const CardContainer = styled(Container)`
-  margin-bottom: ${({ theme }) => theme.SPACES[3]};
+export const CardContainer = styled.View`
+  margin-top: ${({ theme }) => theme.SPACES[8]};
+  margin-bottom: ${({ theme }) => theme.SPACES[10]};
 `
 
 export type HomeCardArrowIconVariant = 'positive' | 'negative'
