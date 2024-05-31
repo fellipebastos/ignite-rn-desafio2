@@ -29,8 +29,6 @@ export const CardContainer = styled.View<CardVariants>`
     border-radius: ${theme.RADII.MD};
 
     padding: ${theme.SPACES[5]} ${theme.SPACES[4]};
-    margin-top: ${theme.SPACES[8]};
-    margin-bottom: ${theme.SPACES[10]};
 
     ${cardContainerVariants.variant[variant](theme)}
   `}
