@@ -1,8 +1,10 @@
 import { TextProps } from 'react-native'
 import { TitleStyle, TitleStyleProps } from './styles'
 
-type TitleProps = TextProps & TitleStyleProps
+type TitleProps = TextProps & {
+  size?: TitleStyleProps['size']
+}
 
-export function Title(props: TitleProps) {
-  return <TitleStyle {...props} />
+export function Title({ size = 'MD', ...props }: TitleProps) {
+  return <TitleStyle size={size} {...props} />
 }
