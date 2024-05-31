@@ -2,6 +2,7 @@ import styled from 'styled-components/native'
 
 export const HeaderContainer = styled.View`
   width: 100%;
+  margin-top: ${({ theme }) => theme.SPACES[4]};
   padding: ${({ theme }) => theme.SPACES[4]} 0;
 
   flex-direction: row;
