@@ -24,6 +24,11 @@ const cardContainerVariants = {
 }
 
 export const CardContainer = styled.View<CardVariants>`
+  flex: 1 1 auto;
+
+  position: relative;
+  align-items: center;
+
   ${({ theme, variant }) => css`
     background-color: ${theme.COLORS.GREEN_100};
     border-radius: ${theme.RADII.MD};
@@ -32,9 +37,6 @@ export const CardContainer = styled.View<CardVariants>`
 
     ${cardContainerVariants.variant[variant](theme)}
   `}
-
-  position: relative;
-  align-items: center;
 `
 
 export enum CardTitleSize {
