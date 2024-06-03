@@ -66,6 +66,7 @@ export const PageContentStyle = styled(SafeAreaView).attrs({
   edges: [],
 })`
   flex: 1;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.05);
 
   ${({ theme }) => css`
     padding: ${theme.SPACES[10]} ${theme.SPACES[6]};
