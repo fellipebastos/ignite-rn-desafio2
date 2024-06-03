@@ -36,6 +36,8 @@ type FormBooleanOptionProps = {
 }
 
 export const FormBooleanOption = styled.TouchableOpacity<FormBooleanOptionProps>`
+  border: 1px solid transparent;
+
   ${({ theme }) => css`
     flex: 1 1 auto;
     border-radius: ${theme.RADII.SM};
@@ -46,7 +48,7 @@ export const FormBooleanOption = styled.TouchableOpacity<FormBooleanOptionProps>
     active &&
     css`
       background-color: ${type ? theme.COLORS.GREEN_100 : theme.COLORS.RED_100};
-      border: 1px solid ${type ? theme.COLORS.GREEN_300 : theme.COLORS.RED_300};
+      border-color: ${type ? theme.COLORS.GREEN_300 : theme.COLORS.RED_300};
     `}
 
   height: 48px;
