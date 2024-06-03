@@ -3,6 +3,7 @@ export declare global {
     interface RootParamList extends PlayersRouteParams {
       home: undefined
       new: undefined
+      stats: undefined
     }
   }
 }
