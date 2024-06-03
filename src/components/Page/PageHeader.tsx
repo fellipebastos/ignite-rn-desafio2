@@ -9,10 +9,10 @@ import {
 import { useNavigation } from '@react-navigation/native'
 
 type PageHeaderProps = ViewProps & {
-  title: string
+  title?: string
 }
 
-export function PageHeader({ title, ...props }: PageHeaderProps) {
+export function PageHeader({ title, children, ...props }: PageHeaderProps) {
   const navigation = useNavigation()
 
   function handleGoBack() {
@@ -24,7 +24,10 @@ export function PageHeader({ title, ...props }: PageHeaderProps) {
       <PageHeaderBackButton onPress={handleGoBack}>
         <PageHeaderBackIcon />
       </PageHeaderBackButton>
-      <PageHeaderTitle>{title}</PageHeaderTitle>
+
+      {title && <PageHeaderTitle>{title}</PageHeaderTitle>}
+
+      {children}
     </PageHeaderStyle>
   )
 }
