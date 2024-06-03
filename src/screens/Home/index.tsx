@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { Plus } from 'phosphor-react-native'
 
 import { Header } from '@components/Header'
@@ -46,6 +47,12 @@ const meals = [
 ]
 
 export function Home() {
+  const navigation = useNavigation()
+
+  function handleCreateMeal() {
+    navigation.navigate('new')
+  }
+
   return (
     <Page.Container>
       <Page.Content>
@@ -61,7 +68,11 @@ export function Home() {
 
         <AddMealContainer>
           <Text>Refeições</Text>
-          <Button title="Nova refeição" icon={Plus} />
+          <Button
+            title="Nova refeição"
+            icon={Plus}
+            onPress={handleCreateMeal}
+          />
         </AddMealContainer>
 
         <MealsList
