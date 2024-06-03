@@ -49,6 +49,10 @@ const meals = [
 export function Home() {
   const navigation = useNavigation()
 
+  function handleGoToStats() {
+    navigation.navigate('stats')
+  }
+
   function handleCreateMeal() {
     navigation.navigate('new')
   }
@@ -58,7 +62,7 @@ export function Home() {
       <Page.Content>
         <Header />
 
-        <CardContainer>
+        <CardContainer onPress={handleGoToStats}>
           <Card.Root variant="positive">
             <HomeCardArrowIcon variant="positive" />
             <Card.Title size="LG">90,86%</Card.Title>

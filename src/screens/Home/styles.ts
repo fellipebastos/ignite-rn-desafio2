@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'phosphor-react-native'
 
 import { Title } from '@components/Title'
 
-export const CardContainer = styled.View`
+export const CardContainer = styled.TouchableOpacity`
   margin-top: ${({ theme }) => theme.SPACES[8]};
   margin-bottom: ${({ theme }) => theme.SPACES[10]};
 `
