@@ -34,7 +34,6 @@ export const PageContainerStyle = styled.View<PageContainerVariants>`
 export const PageHeaderStyle = styled.View`
   ${({ theme }) => css`
     padding: 0 ${theme.SPACES[6]};
-    height: 170px;
     margin-bottom: -45px;
   `}
 
@@ -60,13 +59,15 @@ export const PageHeaderBackIcon = styled(ArrowLeft)`
 export const PageHeaderTitle = styled(Title).attrs({ size: 'LG' })`
   flex: 1;
   text-align: center;
+  padding: 75px 0;
 `
 
 export const PageContentStyle = styled(SafeAreaView).attrs({
   edges: [],
 })`
+  flex: 1;
+
   ${({ theme }) => css`
-    flex: 1;
     padding: ${theme.SPACES[10]} ${theme.SPACES[6]};
     border-top-left-radius: ${theme.RADII.LG};
     border-top-right-radius: ${theme.RADII.LG};
