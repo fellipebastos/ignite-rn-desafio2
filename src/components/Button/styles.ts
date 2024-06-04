@@ -37,15 +37,16 @@ export const ButtonStyle = styled(TouchableHighlight).attrs<ButtonVariants>(
     ...buttonAttrVariants.variant[variant](theme),
   }),
 )`
+  height: 50px;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
   ${({ theme, variant }) => css`
-    height: 50px;
-
     border-radius: ${theme.RADII.SM};
-
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+    padding: 0 ${theme.SPACES[6]};
 
     ${buttonVariants.variant[variant](theme)}
   `}
