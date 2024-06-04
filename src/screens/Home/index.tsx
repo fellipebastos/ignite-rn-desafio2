@@ -54,7 +54,7 @@ export function Home() {
   }
 
   function handleCreateMeal() {
-    navigation.navigate('new')
+    navigation.navigate('meal')
   }
 
   return (

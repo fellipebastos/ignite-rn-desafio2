@@ -7,7 +7,7 @@ import { Button } from '@components/Button'
 import { Form } from '@components/Form'
 import { Page } from '@components/Page'
 
-import { FormNewMeal, FormNewMealDate } from './styles'
+import { FormMeal, FormMealDate } from './styles'
 
 type Inputs = {
   name: string
@@ -17,7 +17,7 @@ type Inputs = {
   isDiet: boolean | null
 }
 
-export function NewMeal() {
+export function Meal() {
   const navigation = useNavigation()
 
   const [inputs, setInputs] = useState<Inputs>({
@@ -56,7 +56,7 @@ export function NewMeal() {
       <Page.Header title="Nova Refeição" />
 
       <Page.Content>
-        <FormNewMeal>
+        <FormMeal>
           <Form.Input
             label="Nome"
             value={inputs.name}
@@ -70,7 +70,7 @@ export function NewMeal() {
             onChangeText={(value) => handleInputChange('description', value)}
           />
 
-          <FormNewMealDate>
+          <FormMealDate>
             <Form.Input
               label="Data"
               value={inputs.date}
@@ -82,14 +82,14 @@ export function NewMeal() {
               value={inputs.time}
               onChangeText={(value) => handleInputChange('time', value)}
             />
-          </FormNewMealDate>
+          </FormMealDate>
 
           <Form.Boolean
             label="Está dentro da dieta?"
             options={options}
             onChange={(value) => handleInputChange('isDiet', value)}
           />
-        </FormNewMeal>
+        </FormMeal>
 
         <Button title="Cadastrar refeição" onPress={handleSubmit} />
       </Page.Content>
