@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import { getTodayDate, getTodayTime } from '@utils/date'
 
@@ -17,6 +18,8 @@ type Inputs = {
 }
 
 export function NewMeal() {
+  const navigation = useNavigation()
+
   const [inputs, setInputs] = useState<Inputs>({
     name: '',
     description: '',
@@ -30,6 +33,8 @@ export function NewMeal() {
   }
 
   function handleSubmit() {
+    if (inputs.isDiet === null) return
+
     setInputs({
       name: '',
       description: '',
@@ -37,6 +42,8 @@ export function NewMeal() {
       time: getTodayTime(),
       isDiet: null,
     })
+
+    navigation.navigate('feedback', { inDiet: inputs.isDiet })
   }
 
   const options = [
