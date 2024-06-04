@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useEffect, useState } from 'react'
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
 import { getTodayDate, getTodayTime } from '@utils/date'
 
@@ -18,6 +18,9 @@ type Inputs = {
 }
 
 export function Meal() {
+  const route = useRoute<RouteProp<MealRouteParams, 'meal'>>()
+  const { id } = route.params || {}
+
   const navigation = useNavigation()
 
   const [inputs, setInputs] = useState<Inputs>({
@@ -46,14 +49,20 @@ export function Meal() {
     navigation.navigate('feedback', { inDiet: inputs.isDiet })
   }
 
+  useEffect(() => {
+    if (id) {
+      // fetch meal by id
+    }
+  }, [id])
+
   const options = [
     { type: true, label: 'Sim', active: inputs.isDiet === true },
-    { type: false, label: 'Não', active: inputs.isDiet === false },
+    { type: false, label: 'Nãot', active: inputs.isDiet === false },
   ]
 
   return (
     <Page.Container color="gray">
-      <Page.Header title="Nova Refeição" />
+      <Page.Header title={`${id ? 'Editar' : 'Nova'} refeição`} />
 
       <Page.Content>
         <FormMeal>
@@ -91,7 +100,10 @@ export function Meal() {
           />
         </FormMeal>
 
-        <Button title="Cadastrar refeição" onPress={handleSubmit} />
+        <Button
+          title={id ? 'Salvar alterações' : 'Cadastrar refeição'}
+          onPress={handleSubmit}
+        />
       </Page.Content>
     </Page.Container>
   )
