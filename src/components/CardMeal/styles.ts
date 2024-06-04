@@ -1,7 +1,7 @@
 import { Text } from '@components/Text'
 import styled, { css } from 'styled-components/native'
 
-export const CardMealContainer = styled.View`
+export const CardMealContainer = styled.TouchableOpacity`
   ${({ theme }) => css`
     background-color: ${theme.COLORS.WHITE};
     border-radius: 6px;
