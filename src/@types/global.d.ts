@@ -13,3 +13,12 @@ type MealDateGroup = {
   date: string
   data: MealDateGroupItem[]
 }
+
+type Stats = {
+  count: number
+  inDietCount: number
+  outOfDietCount: number
+  percentageInDiet: number
+  sequenceInDietCount: number
+  inDiet: boolean
+}

@@ -39,6 +39,43 @@ export async function getMealById(id: string) {
   return meals.find((meal) => meal.id === id)
 }
 
+export async function getMealsStats() {
+  const meals = await getAllMeals()
+
+  const count = meals.length
+  const inDietCount = meals.filter((meal) => meal.inDiet).length
+  const outOfDietCount = meals.filter((meal) => !meal.inDiet).length
+  const percentageInDiet = (inDietCount / meals.length) * 100
+
+  const sequenceInDietCount = meals.reduce<{ best: number; current: number }>(
+    (acc, meal) => {
+      if (meal.inDiet) {
+        acc.current += 1
+        return acc
+      }
+
+      if (acc.current > acc.best) {
+        acc.best = acc.current
+      }
+
+      acc.current = 0
+
+      return acc
+    },
+    { best: 0, current: 0 },
+  ).best
+
+  const stats: Omit<Stats, 'inDiet'> = {
+    count,
+    inDietCount,
+    outOfDietCount,
+    percentageInDiet,
+    sequenceInDietCount,
+  }
+
+  return stats
+}
+
 export async function createMeal(meal: Meal) {
   const meals = await getAllMeals()
 
