@@ -1,5 +1,10 @@
-import { useEffect, useState } from 'react'
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
+import { useCallback, useState } from 'react'
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native'
 import { PencilSimpleLine, Trash } from 'phosphor-react-native'
 
 import { deleteMeal, getMealById } from '@storage/meal'
@@ -41,11 +46,13 @@ export function Show() {
     setMeal(storedMeal)
   }
 
-  useEffect(() => {
-    if (id) {
-      fetchMeal()
-    }
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      if (id) {
+        fetchMeal()
+      }
+    }, []),
+  )
 
   if (!meal) {
     return null
@@ -54,7 +61,7 @@ export function Show() {
   const { name, description, date, hour, inDiet } = meal
 
   return (
-    <Page.Container color="green">
+    <Page.Container color={inDiet ? 'green' : 'red'}>
       <Page.Header title="Refeição" />
 
       <Page.Content>

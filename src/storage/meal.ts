@@ -40,6 +40,20 @@ export async function createMeal(meal: Meal) {
   await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals))
 }
 
+export async function updateMeal(updateMeal: Meal) {
+  const meals = await getAllMeals()
+
+  const updateMealIndex = meals.findIndex((meal) => meal.id === updateMeal.id)
+
+  if (updateMealIndex === -1) {
+    throw new Error('Meal not found')
+  }
+
+  meals[updateMealIndex] = updateMeal
+
+  await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals))
+}
+
 export async function deleteMeal(id: string) {
   const meals = await getAllMeals()
 

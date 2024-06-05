@@ -3,7 +3,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
 import { getTodayDate, getTodayHour } from '@utils/date'
 
-import { createMeal } from '@storage/meal'
+import { createMeal, getMealById, updateMeal } from '@storage/meal'
 
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
@@ -38,37 +38,45 @@ export function Meal() {
   }
 
   async function handleSubmit() {
-    if (inputs.inDiet === null) return
+    const { name, description, date, hour, inDiet } = inputs
+
+    if (typeof inDiet !== 'boolean') return
+
+    const storeMeal = { name, description, date, hour, inDiet }
+
+    if (id) {
+      await updateMeal({ ...storeMeal, id })
+      navigation.goBack()
+      return
+    }
 
     await createMeal({
       id: Date.now().toString(),
-      name: inputs.name,
-      description: inputs.description,
-      date: inputs.date,
-      hour: inputs.hour,
-      inDiet: inputs.inDiet,
+      ...storeMeal,
     })
 
-    setInputs({
-      name: '',
-      description: '',
-      date: getTodayDate(),
-      hour: getTodayHour(),
-      inDiet: null,
-    })
+    navigation.navigate('feedback', { inDiet })
+  }
 
-    navigation.navigate('feedback', { inDiet: inputs.inDiet })
+  async function fetchMeal(mealId: string) {
+    const storedMeal = await getMealById(mealId)
+
+    if (storedMeal) {
+      const { name, description, date, hour, inDiet } = storedMeal
+
+      setInputs({ name, description, date, hour, inDiet })
+    }
   }
 
   useEffect(() => {
     if (id) {
-      // fetch meal by id
+      fetchMeal(id)
     }
   }, [id])
 
   const options = [
     { type: true, label: 'Sim', active: inputs.inDiet === true },
-    { type: false, label: 'Nãot', active: inputs.inDiet === false },
+    { type: false, label: 'Não', active: inputs.inDiet === false },
   ]
 
   return (
