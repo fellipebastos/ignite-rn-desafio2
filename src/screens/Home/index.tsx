@@ -3,6 +3,8 @@ import { SectionListData, SectionListRenderItemInfo } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Plus } from 'phosphor-react-native'
 
+import { formatDateToBR } from '@utils/date'
+
 import { getAllMealsGroupedByDate } from '@storage/meal'
 
 import { Header } from '@components/Header'
@@ -40,7 +42,7 @@ export function Home() {
   function formatMealGroups(mealGroups: MealDateGroup[]) {
     return mealGroups.map((mealGroup) => ({
       ...mealGroup,
-      date: mealGroup.date.replace(/\//g, '.'),
+      date: formatDateToBR(mealGroup.date).replace(/\//g, '.'),
     }))
   }
 

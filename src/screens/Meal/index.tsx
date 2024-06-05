@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
-import { getTodayDate, getTodayHour } from '@utils/date'
+import { formatDateToBR, formatDateToEN, getTodayHour } from '@utils/date'
 
 import { createMeal, getMealById, updateMeal } from '@storage/meal'
 
@@ -28,7 +28,7 @@ export function Meal() {
   const [inputs, setInputs] = useState<Inputs>({
     name: '',
     description: '',
-    date: getTodayDate(),
+    date: formatDateToBR(new Date().toLocaleDateString('pt-BR')),
     hour: getTodayHour(),
     inDiet: null,
   })
@@ -42,7 +42,13 @@ export function Meal() {
 
     if (typeof inDiet !== 'boolean') return
 
-    const storeMeal = { name, description, date, hour, inDiet }
+    const storeMeal = {
+      name,
+      description,
+      hour,
+      inDiet,
+      date: formatDateToEN(date),
+    }
 
     if (id) {
       await updateMeal({ ...storeMeal, id })

@@ -1,7 +1,3 @@
-export function getTodayDate() {
-  return new Date().toLocaleDateString('pt-BR').split(' ')[0]
-}
-
 export function getTodayHour() {
   return new Date()
     .toTimeString()
@@ -9,4 +5,12 @@ export function getTodayHour() {
     .split(':')
     .slice(0, 2)
     .join(':')
+}
+
+export function formatDateToEN(date: string) {
+  return date.split('/').reverse().join('-')
+}
+
+export function formatDateToBR(date: string) {
+  return date.split('-').reverse().join('/')
 }

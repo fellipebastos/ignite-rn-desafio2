@@ -5,7 +5,14 @@ const MEAL_COLLECTION = '@daily-diet:meals'
 export async function getAllMeals() {
   const storedMeals = await AsyncStorage.getItem(MEAL_COLLECTION)
 
-  const meals: Meal[] = storedMeals ? JSON.parse(storedMeals) : []
+  if (!storedMeals) return []
+
+  const meals: Meal[] = JSON.parse(storedMeals)
+
+  meals.sort(
+    (a: Meal, b: Meal) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+  )
 
   return meals
 }
