@@ -1,0 +1,35 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+const MEAL_COLLECTION = '@daily-diet:meals'
+
+export async function getAllMeals() {
+  const storedMeals = await AsyncStorage.getItem(MEAL_COLLECTION)
+
+  const meals: Meal[] = storedMeals ? JSON.parse(storedMeals) : []
+
+  return meals
+}
+
+export async function getAllMealsGroupedByDate() {
+  const meals = await getAllMeals()
+
+  return meals.reduce<MealDateGroup[]>((acc, { date, ...meal }) => {
+    const dateIndex = acc.findIndex((group) => group.date === date)
+
+    if (dateIndex !== -1) {
+      acc[dateIndex].data.push(meal)
+    } else {
+      acc.push({ date, data: [meal] })
+    }
+
+    return acc
+  }, [])
+}
+
+export async function createMeal(meal: Meal) {
+  const meals = await getAllMeals()
+
+  meals.push(meal)
+
+  await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals))
+}

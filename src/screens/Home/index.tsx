@@ -1,5 +1,9 @@
-import { useNavigation } from '@react-navigation/native'
+import { useCallback, useState } from 'react'
+import { SectionListData, SectionListRenderItemInfo } from 'react-native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Plus } from 'phosphor-react-native'
+
+import { getAllMealsGroupedByDate } from '@storage/meal'
 
 import { Header } from '@components/Header'
 import { Card } from '@components/Card'
@@ -16,38 +20,10 @@ import {
   MealsListTitle,
 } from './styles'
 
-const meals = [
-  {
-    title: '12.08.22',
-    data: [
-      { id: '1', title: 'X-tudo', time: '12:00', status: true },
-      { id: '2', title: 'X-salada', time: '12:00', status: false },
-      { id: '3', title: 'X-bacon', time: '12:00', status: true },
-    ],
-  },
-  {
-    title: '11.08.22',
-    data: [
-      { id: '5', title: 'Janta', time: '20:00', status: false },
-      { id: '4', title: 'Almoço', time: '12:00', status: true },
-      {
-        id: '6',
-        title: 'Café da manhã',
-        time: '08:00',
-        status: true,
-      },
-      {
-        id: '7',
-        title: 'Café da tarde',
-        time: '16:00',
-        status: true,
-      },
-    ],
-  },
-]
-
 export function Home() {
   const navigation = useNavigation()
+
+  const [mealSections, setMealSections] = useState<MealDateGroup[]>([])
 
   function handleGoToStats() {
     navigation.navigate('stats')
@@ -60,6 +36,25 @@ export function Home() {
   function handleShowMeal(id: string) {
     navigation.navigate('show', { id })
   }
+
+  function formatMealGroups(mealGroups: MealDateGroup[]) {
+    return mealGroups.map((mealGroup) => ({
+      ...mealGroup,
+      date: mealGroup.date.replace(/\//g, '.'),
+    }))
+  }
+
+  async function fetchMeals() {
+    const mealGroups = await getAllMealsGroupedByDate()
+
+    setMealSections(formatMealGroups(mealGroups))
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals()
+    }, []),
+  )
 
   return (
     <Page.Container>
@@ -85,13 +80,19 @@ export function Home() {
 
         <MealsList
           stickySectionHeadersEnabled={false}
-          sections={meals}
-          keyExtractor={(item) => item.id + item.title}
-          renderItem={({ item }) => (
+          showsVerticalScrollIndicator={false}
+          sections={mealSections}
+          keyExtractor={(item: Meal) => item.id}
+          renderSectionHeader={({ section }: SectionListData<Meal>) => (
+            <MealsListTitle size="LG">{section.date}</MealsListTitle>
+          )}
+          renderItem={({
+            item,
+          }: SectionListRenderItemInfo<MealDateGroupItem>) => (
             <CardMeal meal={item} onPress={() => handleShowMeal(item.id)} />
           )}
-          renderSectionHeader={({ section }) => (
-            <MealsListTitle size="LG">{section.title}</MealsListTitle>
+          ListEmptyComponent={() => (
+            <Text>Não há refeições cadastradas ainda.</Text>
           )}
         />
       </Page.Content>

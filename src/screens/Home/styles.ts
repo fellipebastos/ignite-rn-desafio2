@@ -1,3 +1,4 @@
+import { SectionList } from 'react-native'
 import styled, { DefaultTheme, css } from 'styled-components/native'
 import { ArrowUpRight } from 'phosphor-react-native'
 
@@ -43,7 +44,13 @@ export const AddMealContainer = styled.View`
   gap: ${({ theme }) => theme.SPACES[3]};
 `
 
-export const MealsList = styled.SectionList`
+export const MealsList = styled(SectionList).attrs(({ sections }) => ({
+  contentContainerStyle: !sections.length && {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+}))`
   margin-top: ${({ theme }) => theme.SPACES[4]};
 `
 

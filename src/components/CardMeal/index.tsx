@@ -1,4 +1,5 @@
 import { TouchableOpacityProps } from 'react-native'
+
 import {
   CardMealContainer,
   CardMealDivider,
@@ -9,22 +10,22 @@ import {
 
 type CardMealProps = TouchableOpacityProps & {
   meal: {
-    time: string
-    title: string
-    status: boolean
+    name: string
+    hour: string
+    inDiet: boolean
   }
 }
 
 export function CardMeal({
-  meal: { time, title, status },
+  meal: { hour, name, inDiet },
   ...props
 }: CardMealProps) {
   return (
     <CardMealContainer {...props}>
-      <CardMealTime>{time}</CardMealTime>
+      <CardMealTime>{hour}</CardMealTime>
       <CardMealDivider />
-      <CardMealTitle>{title}</CardMealTitle>
-      <CardMealStatus status={status} />
+      <CardMealTitle>{name}</CardMealTitle>
+      <CardMealStatus status={inDiet} />
     </CardMealContainer>
   )
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 
-import { getTodayDate, getTodayTime } from '@utils/date'
+import { getTodayDate, getTodayHour } from '@utils/date'
+
+import { createMeal } from '@storage/meal'
 
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
@@ -13,8 +15,8 @@ type Inputs = {
   name: string
   description: string
   date: string
-  time: string
-  isDiet: boolean | null
+  hour: string
+  inDiet: boolean | null
 }
 
 export function Meal() {
@@ -27,26 +29,35 @@ export function Meal() {
     name: '',
     description: '',
     date: getTodayDate(),
-    time: getTodayTime(),
-    isDiet: null,
+    hour: getTodayHour(),
+    inDiet: null,
   })
 
   function handleInputChange(name: string, value: string | boolean) {
     setInputs((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit() {
-    if (inputs.isDiet === null) return
+  async function handleSubmit() {
+    if (inputs.inDiet === null) return
+
+    await createMeal({
+      id: Date.now().toString(),
+      name: inputs.name,
+      description: inputs.description,
+      date: inputs.date,
+      hour: inputs.hour,
+      inDiet: inputs.inDiet,
+    })
 
     setInputs({
       name: '',
       description: '',
       date: getTodayDate(),
-      time: getTodayTime(),
-      isDiet: null,
+      hour: getTodayHour(),
+      inDiet: null,
     })
 
-    navigation.navigate('feedback', { inDiet: inputs.isDiet })
+    navigation.navigate('feedback', { inDiet: inputs.inDiet })
   }
 
   useEffect(() => {
@@ -56,8 +67,8 @@ export function Meal() {
   }, [id])
 
   const options = [
-    { type: true, label: 'Sim', active: inputs.isDiet === true },
-    { type: false, label: 'Nãot', active: inputs.isDiet === false },
+    { type: true, label: 'Sim', active: inputs.inDiet === true },
+    { type: false, label: 'Nãot', active: inputs.inDiet === false },
   ]
 
   return (
@@ -88,15 +99,15 @@ export function Meal() {
 
             <Form.Input
               label="Hora"
-              value={inputs.time}
-              onChangeText={(value) => handleInputChange('time', value)}
+              value={inputs.hour}
+              onChangeText={(value) => handleInputChange('hour', value)}
             />
           </FormMealDate>
 
           <Form.Boolean
             label="Está dentro da dieta?"
             options={options}
-            onChange={(value) => handleInputChange('isDiet', value)}
+            onChange={(value) => handleInputChange('inDiet', value)}
           />
         </FormMeal>
 

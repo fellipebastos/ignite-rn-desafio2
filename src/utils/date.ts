@@ -2,7 +2,7 @@ export function getTodayDate() {
   return new Date().toLocaleDateString('pt-BR').split(' ')[0]
 }
 
-export function getTodayTime() {
+export function getTodayHour() {
   return new Date()
     .toTimeString()
     .split(' ')[0]
