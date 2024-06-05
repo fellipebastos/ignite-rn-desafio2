@@ -26,10 +26,24 @@ export async function getAllMealsGroupedByDate() {
   }, [])
 }
 
+export async function getMealById(id: string) {
+  const meals = await getAllMeals()
+
+  return meals.find((meal) => meal.id === id)
+}
+
 export async function createMeal(meal: Meal) {
   const meals = await getAllMeals()
 
   meals.push(meal)
 
   await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(meals))
+}
+
+export async function deleteMeal(id: string) {
+  const meals = await getAllMeals()
+
+  const updatedMeals = meals.filter((meal) => meal.id !== id)
+
+  await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(updatedMeals))
 }

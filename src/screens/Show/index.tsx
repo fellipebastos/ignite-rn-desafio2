@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native'
 import { PencilSimpleLine, Trash } from 'phosphor-react-native'
+
+import { deleteMeal, getMealById } from '@storage/meal'
 
 import { Page } from '@components/Page'
 import { Text } from '@components/Text'
@@ -14,7 +17,6 @@ import {
   DietStatusText,
   Info,
 } from './styles'
-import { Alert } from 'react-native'
 
 export function Show() {
   const route = useRoute<RouteProp<ShowRouteParams, 'show'>>()
@@ -22,15 +24,34 @@ export function Show() {
 
   const navigation = useNavigation()
 
+  const [meal, setMeal] = useState<Meal>()
+
   function handleEditMeal() {
     navigation.navigate('meal', { id })
   }
 
-  function handleDeleteMeal() {
-    Alert.alert('Refeição excluída com sucesso!', '', [
-      { onPress: () => navigation.navigate('home') },
-    ])
+  async function handleDeleteMeal() {
+    await deleteMeal(id)
+    navigation.navigate('home')
   }
+
+  async function fetchMeal() {
+    const storedMeal = await getMealById(id)
+
+    setMeal(storedMeal)
+  }
+
+  useEffect(() => {
+    if (id) {
+      fetchMeal()
+    }
+  }, [])
+
+  if (!meal) {
+    return null
+  }
+
+  const { name, description, date, hour, inDiet } = meal
 
   return (
     <Page.Container color="green">
@@ -38,21 +59,22 @@ export function Show() {
 
       <Page.Content>
         <Info>
-          <Title size="LG">Sanduíche</Title>
-          <Text>
-            Sanduíche de pão integral com atum e salada de alface e tomate
-          </Text>
+          <Title size="LG">{name}</Title>
+          <Text>{description}</Text>
         </Info>
 
         <Info>
           <Title size="SM">Data e hora</Title>
-          <Text>12/08/2022 às 16:00</Text>
+          <Text>
+            {date} às {hour}
+          </Text>
         </Info>
 
         <DietStatus>
-          <DietStatusCircle inDiet />
-          <DietStatusText>dentro da dieta</DietStatusText>
-          {/* <DietStatusText>fora da dieta</DietStatusText> */}
+          <DietStatusCircle inDiet={inDiet} />
+          <DietStatusText>
+            {inDiet ? 'dentro da dieta' : 'fora da dieta'}
+          </DietStatusText>
         </DietStatus>
 
         <Actions>
