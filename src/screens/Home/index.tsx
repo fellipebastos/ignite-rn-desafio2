@@ -57,6 +57,10 @@ export function Home() {
     navigation.navigate('meal')
   }
 
+  function handleShowMeal(id: string) {
+    navigation.navigate('show', { id })
+  }
+
   return (
     <Page.Container>
       <Page.Content>
@@ -83,7 +87,9 @@ export function Home() {
           stickySectionHeadersEnabled={false}
           sections={meals}
           keyExtractor={(item) => item.id + item.title}
-          renderItem={({ item }) => <CardMeal meal={item} />}
+          renderItem={({ item }) => (
+            <CardMeal meal={item} onPress={() => handleShowMeal(item.id)} />
+          )}
           renderSectionHeader={({ section }) => (
             <MealsListTitle size="LG">{section.title}</MealsListTitle>
           )}
