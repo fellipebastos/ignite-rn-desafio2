@@ -5,13 +5,22 @@ export declare global {
     }
   }
 
+  type ShowRouteParams = {
+    show: {
+      id: string
+    }
+  }
+
   type FeedbackRouteParams = {
     feedback: {
       inDiet: boolean
     }
   }
   namespace ReactNavigation {
-    interface RootParamList extends MealRouteParams, FeedbackRouteParams {
+    interface RootParamList
+      extends MealRouteParams,
+        ShowRouteParams,
+        FeedbackRouteParams {
       home: undefined
       stats: undefined
     }
