@@ -45,7 +45,7 @@ export async function getMealsStats() {
   const count = meals.length
   const inDietCount = meals.filter((meal) => meal.inDiet).length
   const outOfDietCount = meals.filter((meal) => !meal.inDiet).length
-  const percentageInDiet = (inDietCount / meals.length) * 100
+  const percentageInDiet = (inDietCount / meals.length || 0) * 100
 
   const sequenceInDietCount = meals.reduce<{ best: number; current: number }>(
     (acc, meal) => {
