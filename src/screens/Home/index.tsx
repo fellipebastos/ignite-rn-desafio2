@@ -7,6 +7,8 @@ import { formatDateToBR } from '@utils/date'
 
 import { getAllMealsGroupedByDate } from '@storage/meal'
 
+import { useStats } from '@providers/StatsProvider'
+
 import { Header } from '@components/Header'
 import { Card } from '@components/Card'
 import { Text } from '@components/Text'
@@ -24,6 +26,7 @@ import {
 
 export function Home() {
   const navigation = useNavigation()
+  const { inDiet, percentageInDiet } = useStats()
 
   const [mealSections, setMealSections] = useState<MealDateGroup[]>([])
 
@@ -64,9 +67,9 @@ export function Home() {
         <Header />
 
         <CardContainer onPress={handleGoToStats}>
-          <Card.Root variant="positive">
-            <HomeCardArrowIcon variant="positive" />
-            <Card.Title size="LG">90,86%</Card.Title>
+          <Card.Root variant={inDiet ? 'positive' : 'negative'}>
+            <HomeCardArrowIcon variant={inDiet ? 'positive' : 'negative'} />
+            <Card.Title size="LG">{percentageInDiet.toFixed(2)}%</Card.Title>
             <Card.Description>das refeições dentro da dieta</Card.Description>
           </Card.Root>
         </CardContainer>

@@ -9,6 +9,8 @@ import { PencilSimpleLine, Trash } from 'phosphor-react-native'
 
 import { deleteMeal, getMealById } from '@storage/meal'
 
+import { useStats } from '@providers/StatsProvider'
+
 import { Page } from '@components/Page'
 import { Text } from '@components/Text'
 import { Title } from '@components/Title'
@@ -28,6 +30,7 @@ export function Show() {
   const { id } = route.params
 
   const navigation = useNavigation()
+  const { refreshStats } = useStats()
 
   const [meal, setMeal] = useState<Meal>()
 
@@ -37,6 +40,7 @@ export function Show() {
 
   async function handleDeleteMeal() {
     await deleteMeal(id)
+    await refreshStats()
     navigation.navigate('home')
   }
 

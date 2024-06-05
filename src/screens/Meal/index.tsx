@@ -5,6 +5,8 @@ import { formatDateToBR, formatDateToEN, getTodayHour } from '@utils/date'
 
 import { createMeal, getMealById, updateMeal } from '@storage/meal'
 
+import { useStats } from '@providers/StatsProvider'
+
 import { Button } from '@components/Button'
 import { Form } from '@components/Form'
 import { Page } from '@components/Page'
@@ -24,6 +26,7 @@ export function Meal() {
   const { id } = route.params || {}
 
   const navigation = useNavigation()
+  const { refreshStats } = useStats()
 
   const [inputs, setInputs] = useState<Inputs>({
     name: '',
@@ -52,6 +55,8 @@ export function Meal() {
 
     if (id) {
       await updateMeal({ ...storeMeal, id })
+      await refreshStats()
+
       navigation.goBack()
       return
     }
@@ -61,6 +66,7 @@ export function Meal() {
       ...storeMeal,
     })
 
+    await refreshStats()
     navigation.navigate('feedback', { inDiet })
   }
 
